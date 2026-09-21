@@ -21,16 +21,16 @@ Candidato con experiencia backend en Java
 
 ### Reto
 - Tema: Diseño e Implementación de un Modelo de Datos Normalizado
-- Seniority: advanced-l1
+- Seniority: advanced-l2
 - Tipo: practical
-- Título: Normalización de Modelo de Datos
+- Título: Normalización de Modelo de Datos en una Base de Datos
 - Tiempo estimado: 4-6 horas
 
 ### Fases (trabajo del HUMANO — PROHIBIDO completarlas)
 No implementes estos entregables. Dejalos como hueco pedagógico. El asistente solo materializa el proyecto arrancable para que el participante pueda trabajar.
-- Fase 1: Diseño Inicial del Modelo de Datos — objetivo: Crear un modelo de datos que represente las entidades y relaciones necesarias para el sistema. — entregable (NO resolver): Diagrama Entidad-Relación completo.
-- Fase 2: Aplicación de Formas Normales — objetivo: Aplicar las formas normales al modelo de datos para eliminar redundancias y mejorar la integridad. — entregable (NO resolver): Modelo de datos normalizado con formas normales aplicadas.
-- Fase 3: Implementación del Modelo de Datos — objetivo: Implementar el modelo de datos normalizado en una base de datos. — entregable (NO resolver): Base de datos con el modelo de datos normalizado implementado y datos de prueba insertados.
+- Fase 1: Análisis de Requerimientos — objetivo: Identificar las entidades y relaciones necesarias para el modelo de datos. — entregable (NO resolver): Diagrama Entidad-Relación completo.
+- Fase 2: Normalización del Modelo de Datos — objetivo: Aplicar las formas normales al modelo de datos para eliminar la redundancia y mejorar la eficiencia. — entregable (NO resolver): Modelo de datos normalizado con las formas normales aplicadas.
+- Fase 3: Implementación del Modelo de Datos — objetivo: Implementar el modelo de datos normalizado en una base de datos. — entregable (NO resolver): Base de datos implementada con el modelo de datos normalizado.
 
 Eres un asistente experto en análisis, corrección y generación de archivos de cualquier tipo:
 código fuente, documentación, hojas de cálculo, documentos Word, configuraciones, entre otros.
@@ -150,469 +150,25 @@ El participante que recibirá este proyecto los debe encontrar y resolver él mi
 INPUT
 Aquí está la cadena con los archivos:
 
-// === ARCHIVO: src/main/java/com/fintech/model/Cliente.java ===
-package com.fintech.model;
-
-import jakarta.persistence.*;
-
-@Entity
-public class Cliente {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String nombre;
-    private String email;
-    // Getters and setters
-}
-
-// === ARCHIVO: src/main/java/com/fintech/model/Cuenta.java ===
-package com.fintech.model;
-
-import jakarta.persistence.*;
-import java.util.List;
-
-@Entity
-public class Cuenta {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String numeroCuenta;
-    private double saldo;
-    @ManyToOne
-    private Cliente cliente;
-    @OneToMany(mappedBy = "cuenta")
-    private List<Transaccion> transacciones;
-    // Getters and setters
-}
-
-// === ARCHIVO: src/main/java/com/fintech/model/Transaccion.java ===
-package com.fintech.model;
-
-import jakarta.persistence.*;
-
-@Entity
-public class Transaccion {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private double monto;
-    private String descripcion;
-    @ManyToOne
-    private Cuenta cuenta;
-    // Getters and setters
-}
-
-// === ARCHIVO: src/main/java/com/fintech/model/ProductoFinanciero.java ===
-package com.fintech.model;
-
-import jakarta.persistence.*;
-
-@Entity
-public class ProductoFinanciero {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String nombre;
-    private double tasaInteres;
-    // Getters and setters
-}
-
-// === ARCHIVO: src/main/java/com/fintech/repository/ClienteRepository.java ===
-package com.fintech.repository;
-
-import com.fintech.model.Cliente;
-import org.springframework.data.jpa.repository.JpaRepository;
-
-public interface ClienteRepository extends JpaRepository<Cliente, Long> {
-}
-
-// === ARCHIVO: src/main/java/com/fintech/repository/CuentaRepository.java ===
-package com.fintech.repository;
-
-import com.fintech.model.Cuenta;
-import org.springframework.data.jpa.repository.JpaRepository;
-
-public interface CuentaRepository extends JpaRepository<Cuenta, Long> {
-}
-
-// === ARCHIVO: src/main/java/com/fintech/repository/TransaccionRepository.java ===
-package com.fintech.repository;
-
-import com.fintech.model.Transaccion;
-import org.springframework.data.jpa.repository.JpaRepository;
-
-public interface TransaccionRepository extends JpaRepository<Transaccion, Long> {
-}
-
-// === ARCHIVO: src/main/java/com/fintech/repository/ProductoFinancieroRepository.java ===
-package com.fintech.repository;
-
-import com.fintech.model.ProductoFinanciero;
-import org.springframework.data.jpa.repository.JpaRepository;
-
-public interface ProductoFinancieroRepository extends JpaRepository<ProductoFinanciero, Long> {
-}
-
-// === ARCHIVO: src/main/java/com/fintech/service/ClienteService.java ===
-package com.fintech.service;
-
-import com.fintech.model.Cliente;
-import com.fintech.repository.ClienteRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-
-@Service
-public class ClienteService {
-    @Autowired
-    private ClienteRepository clienteRepository;
-
-    public List<Cliente> getAllClientes() {
-        return clienteRepository.findAll();
-    }
-
-    public Cliente getClienteById(Long id) {
-        return clienteRepository.findById(id).orElse(null);
-    }
-
-    public Cliente saveCliente(Cliente cliente) {
-        return clienteRepository.save(cliente);
-    }
-
-    public void deleteCliente(Long id) {
-        clienteRepository.deleteById(id);
-    }
-}
-
-// === ARCHIVO: src/main/java/com/fintech/service/CuentaService.java ===
-package com.fintech.service;
-
-import com.fintech.model.Cuenta;
-import com.fintech.repository.CuentaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-
-@Service
-public class CuentaService {
-    @Autowired
-    private CuentaRepository cuentaRepository;
-
-    public List<Cuenta> getAllCuentas() {
-        return cuentaRepository.findAll();
-    }
-
-    public Cuenta getCuentaById(Long id) {
-        return cuentaRepository.findById(id).orElse(null);
-    }
-
-    public Cuenta saveCuenta(Cuenta cuenta) {
-        return cuentaRepository.save(cuenta);
-    }
-
-    public void deleteCuenta(Long id) {
-        cuentaRepository.deleteById(id);
-    }
-}
-
-// === ARCHIVO: src/main/java/com/fintech/service/TransaccionService.java ===
-package com.fintech.service;
-
-import com.fintech.model.Transaccion;
-import com.fintech.repository.TransaccionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-
-@Service
-public class TransaccionService {
-    @Autowired
-    private TransaccionRepository transaccionRepository;
-
-    public List<Transaccion> getAllTransacciones() {
-        return transaccionRepository.findAll();
-    }
-
-    public Transaccion getTransaccionById(Long id) {
-        return transaccionRepository.findById(id).orElse(null);
-    }
-
-    public Transaccion saveTransaccion(Transaccion transaccion) {
-        return transaccionRepository.save(transaccion);
-    }
-
-    public void deleteTransaccion(Long id) {
-        transaccionRepository.deleteById(id);
-    }
-}
-
-// === ARCHIVO: src/main/java/com/fintech/service/ProductoFinancieroService.java ===
-package com.fintech.service;
-
-import com.fintech.model.ProductoFinanciero;
-import com.fintech.repository.ProductoFinancieroRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-
-@Service
-public class ProductoFinancieroService {
-    @Autowired
-    private ProductoFinancieroRepository productoFinancieroRepository;
-
-    public List<ProductoFinanciero> getAllProductosFinancieros() {
-        return productoFinancieroRepository.findAll();
-    }
-
-    public ProductoFinanciero getProductoFinancieroById(Long id) {
-        return productoFinancieroRepository.findById(id).orElse(null);
-    }
-
-    public ProductoFinanciero saveProductoFinanciero(ProductoFinanciero productoFinanciero) {
-        return productoFinancieroRepository.save(productoFinanciero);
-    }
-
-    public void deleteProductoFinanciero(Long id) {
-        productoFinancieroRepository.deleteById(id);
-    }
-}
-
-// === ARCHIVO: src/main/resources/db/schema.sql ===
-CREATE TABLE Cliente (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(255),
-    email VARCHAR(255)
-);
-
-CREATE TABLE Cuenta (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    numeroCuenta VARCHAR(255),
-    saldo DOUBLE,
-    cliente_id BIGINT,
-    FOREIGN KEY (cliente_id) REFERENCES Cliente(id)
-);
-
-CREATE TABLE Transaccion (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    monto DOUBLE,
-    descripcion VARCHAR(255),
-    cuenta_id BIGINT,
-    FOREIGN KEY (cuenta_id) REFERENCES Cuenta(id)
-);
-
-CREATE TABLE ProductoFinanciero (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(255),
-    tasaInteres DOUBLE
-);
-
-// === ARCHIVO: src/main/resources/db/data.sql ===
-INSERT INTO Cliente (nombre, email) VALUES ('Juan Perez', 'juan@example.com');
-INSERT INTO Cuenta (numeroCuenta, saldo, cliente_id) VALUES ('123456789', 1000.0, 1);
-INSERT INTO Transaccion (monto, descripcion, cuenta_id) VALUES (500.0, 'Compra', 1);
-INSERT INTO ProductoFinanciero (nombre, tasaInteres) VALUES ('Prestamo Personal', 5.0);
-
-// === ARCHIVO: src/test/java/com/fintech/ClienteServiceTest.java ===
-package com.fintech;
-
-import com.fintech.model.Cliente;
-import com.fintech.service.ClienteService;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-@SpringBootTest
-class ClienteServiceTest {
-    @Autowired
-    private ClienteService clienteService;
-
-    @Test
-    void testGetAllClientes() {
-        assertNotNull(clienteService.getAllClientes());
-    }
-
-    @Test
-    void testGetClienteById() {
-        Cliente cliente = clienteService.getClienteById(1L);
-        assertNotNull(cliente);
-        assertEquals("Juan Perez", cliente.getNombre());
-    }
-
-    @Test
-    void testSaveCliente() {
-        Cliente cliente = new Cliente();
-        cliente.setNombre("Ana Gomez");
-        cliente.setEmail("ana@example.com");
-        Cliente savedCliente = clienteService.saveCliente(cliente);
-        assertNotNull(savedCliente);
-        assertEquals("Ana Gomez", savedCliente.getNombre());
-    }
-
-    @Test
-    void testDeleteCliente() {
-        clienteService.deleteCliente(1L);
-        Cliente cliente = clienteService.getClienteById(1L);
-        assertNull(cliente);
-    }
-}
-
-// === ARCHIVO: src/test/java/com/fintech/CuentaServiceTest.java ===
-package com.fintech;
-
-import com.fintech.model.Cuenta;
-import com.fintech.service.CuentaService;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-@SpringBootTest
-class CuentaServiceTest {
-    @Autowired
-    private CuentaService cuentaService;
-
-    @Test
-    void testGetAllCuentas() {
-        assertNotNull(cuentaService.getAllCuentas());
-    }
-
-    @Test
-    void testGetCuentaById() {
-        Cuenta cuenta = cuentaService.getCuentaById(1L);
-        assertNotNull(cuenta);
-        assertEquals("123456789", cuenta.getNumeroCuenta());
-    }
-
-    @Test
-    void testSaveCuenta() {
-        Cuenta cuenta = new Cuenta();
-        cuenta.setNumeroCuenta("987654321");
-        cuenta.setSaldo(2000.0);
-        Cuenta savedCuenta = cuentaService.saveCuenta(cuenta);
-        assertNotNull(savedCuenta);
-        assertEquals("987654321", savedCuenta.getNumeroCuenta());
-    }
-
-    @Test
-    void testDeleteCuenta() {
-        cuentaService.deleteCuenta(1L);
-        Cuenta cuenta = cuentaService.getCuentaById(1L);
-        assertNull(cuenta);
-    }
-}
-
-// === ARCHIVO: src/test/java/com/fintech/TransaccionServiceTest.java ===
-package com.fintech;
-
-import com.fintech.model.Transaccion;
-import com.fintech.service.TransaccionService;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-@SpringBootTest
-class TransaccionServiceTest {
-    @Autowired
-    private TransaccionService transaccionService;
-
-    @Test
-    void testGetAllTransacciones() {
-        assertNotNull(transaccionService.getAllTransacciones());
-    }
-
-    @Test
-    void testGetTransaccionById() {
-        Transaccion transaccion = transaccionService.getTransaccionById(1L);
-        assertNotNull(transaccion);
-        assertEquals(500.0, transaccion.getMonto());
-    }
-
-    @Test
-    void testSaveTransaccion() {
-        Transaccion transaccion = new Transaccion();
-        transaccion.setMonto(1000.0);
-        transaccion.setDescripcion("Venta");
-        Transaccion savedTransaccion = transaccionService.saveTransaccion(transaccion);
-        assertNotNull(savedTransaccion);
-        assertEquals(1000.0, savedTransaccion.getMonto());
-    }
-
-    @Test
-    void testDeleteTransaccion() {
-        transaccionService.deleteTransaccion(1L);
-        Transaccion transaccion = transaccionService.getTransaccionById(1L);
-        assertNull(transaccion);
-    }
-}
-
-// === ARCHIVO: src/test/java/com/fintech/ProductoFinancieroServiceTest.java ===
-package com.fintech;
-
-import com.fintech.model.ProductoFinanciero;
-import com.fintech.service.ProductoFinancieroService;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-@SpringBootTest
-class ProductoFinancieroServiceTest {
-    @Autowired
-    private ProductoFinancieroService productoFinancieroService;
-
-    @Test
-    void testGetAllProductosFinancieros() {
-        assertNotNull(productoFinancieroService.getAllProductosFinancieros());
-    }
-
-    @Test
-    void testGetProductoFinancieroById() {
-        ProductoFinanciero productoFinanciero = productoFinancieroService.getProductoFinancieroById(1L);
-        assertNotNull(productoFinanciero);
-        assertEquals("Prestamo Personal", productoFinanciero.getNombre());
-    }
-
-    @Test
-    void testSaveProductoFinanciero() {
-        ProductoFinanciero productoFinanciero = new ProductoFinanciero();
-        productoFinanciero.setNombre("Tarjeta de Credito");
-        productoFinanciero.setTasaInteres(10.0);
-        ProductoFinanciero savedProductoFinanciero = productoFinancieroService.saveProductoFinanciero(productoFinanciero);
-        assertNotNull(savedProductoFinanciero);
-        assertEquals("Tarjeta de Credito", savedProductoFinanciero.getNombre());
-    }
-
-    @Test
-    void testDeleteProductoFinanciero() {
-        productoFinancieroService.deleteProductoFinanciero(1L);
-        ProductoFinanciero productoFinanciero = productoFinancieroService.getProductoFinancieroById(1L);
-        assertNull(productoFinanciero);
-    }
-}
-
 // === ARCHIVO: pom.xml ===
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.fintech</groupId>
-    <artifactId>fintech</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>com.pragma</groupId>
+    <artifactId>data-normalization</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>Data Normalization</name>
+    <description>Demo project for Spring Boot</description>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.4.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+    <properties>
+        <java.version>21</java.version>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -620,13 +176,17 @@ class ProductoFinancieroServiceTest {
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     <build>
@@ -638,4 +198,118 @@ class ProductoFinancieroServiceTest {
         </plugins>
     </build>
 </project>
+
+// === ARCHIVO: src/main/resources/db/schema.sql ===
+CREATE TABLE IF NOT EXISTS entity (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT
+);
+
+// === ARCHIVO: src/main/resources/diagrams/ERD.png ===
+<!-- Este archivo es un placeholder para el diagrama Entidad-Relación -->
+
+// === ARCHIVO: src/main/java/com/pragma/data/model/Entity.java ===
+package com.pragma.data.model;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
+public class Entity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    private String description;
+
+    // Getters and setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+}
+
+// === ARCHIVO: src/main/java/com/pragma/domain/service/DataService.java ===
+package com.pragma.domain.service;
+
+import com.pragma.data.model.Entity;
+import com.pragma.infrastructure.repository.DataRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class DataService {
+
+    private final DataRepository dataRepository;
+
+    @Autowired
+    public DataService(DataRepository dataRepository) {
+        this.dataRepository = dataRepository;
+    }
+
+    public List<Entity> getAllEntities() {
+        return dataRepository.findAll();
+    }
+
+    public Entity getEntityById(Long id) {
+        return dataRepository.findById(id).orElse(null);
+    }
+
+    public Entity saveEntity(Entity entity) {
+        return dataRepository.save(entity);
+    }
+
+    public void deleteEntity(Long id) {
+        dataRepository.deleteById(id);
+    }
+}
+
+// === ARCHIVO: src/main/java/com/pragma/infrastructure/repository/DataRepository.java ===
+package com.pragma.infrastructure.repository;
+
+import com.pragma.data.model.Entity;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface DataRepository extends JpaRepository<Entity, Long> {
+}
+
+// === ARCHIVO: src/main/java/com/pragma/DataNormalizationApplication.java ===
+package com.pragma;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class DataNormalizationApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(DataNormalizationApplication.class, args);
+    }
+}
 ```

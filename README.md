@@ -1,13 +1,13 @@
-# Normalización de Modelo de Datos
+# Normalización de Modelo de Datos en una Base de Datos
 
-Una empresa de fintech necesita un modelo de datos eficiente y normalizado para gestionar sus transacciones financieras. El sistema debe almacenar información sobre clientes, cuentas, transacciones y productos financieros. Tu tarea es diseñar e implementar un modelo de datos normalizado que cumpla con las formas normales y utilice un modelo Entidad-Relación.
+El sistema de gestión de una empresa fintech necesita un modelo de datos normalizado para mejorar la eficiencia y reducir la redundancia. Tu tarea es diseñar e implementar un modelo de datos que cumpla con las formas normales y utilizar un modelo Entidad-Relación para representar la estructura de la base de datos.
 
 ## Informacion General
 
 | Campo | Valor |
 |-------|-------|
 | **Tema** | Diseño e Implementación de un Modelo de Datos Normalizado |
-| **Nivel** | advanced-l1 |
+| **Nivel** | advanced-l2 |
 | **Tipo** | practical |
 | **Tiempo estimado** | 4-6 horas |
 
@@ -38,46 +38,45 @@ Una empresa de fintech necesita un modelo de datos eficiente y normalizado para 
 
 </details>
 
-### Fase 1: Diseño Inicial del Modelo de Datos
+### Fase 1: Análisis de Requerimientos
 
-**Objetivo:** Crear un modelo de datos que represente las entidades y relaciones necesarias para el sistema.
+**Objetivo:** Identificar las entidades y relaciones necesarias para el modelo de datos.
 
 **Tiempo estimado:** 1 hora
 
 **Instrucciones:**
 
-- Identifica las entidades clave del sistema (clientes, cuentas, transacciones, productos financieros).
-- Define las relaciones entre estas entidades.
-- Crea un diagrama Entidad-Relación que represente el modelo de datos.
+- Analiza los requerimientos del sistema y determina las entidades y relaciones necesarias.
+- Crea un diagrama Entidad-Relación que represente la estructura del modelo de datos.
 
 **Entregable:** Diagrama Entidad-Relación completo.
 
 <details>
 <summary>Pistas de conocimiento</summary>
 
-- Recuerda que las formas normales ayudan a eliminar redundancias y mejorar la integridad de los datos.
-- Piensa en cómo las relaciones entre entidades impactan la estructura del modelo de datos.
+- Considera las reglas de negocio y las relaciones entre las entidades.
+- Piensa en cómo las entidades se relacionan entre sí y cómo se pueden normalizar.
 
 </details>
 
-### Fase 2: Aplicación de Formas Normales
+### Fase 2: Normalización del Modelo de Datos
 
-**Objetivo:** Aplicar las formas normales al modelo de datos para eliminar redundancias y mejorar la integridad.
+**Objetivo:** Aplicar las formas normales al modelo de datos para eliminar la redundancia y mejorar la eficiencia.
 
 **Tiempo estimado:** 2 horas
 
 **Instrucciones:**
 
-- Analiza tu modelo de datos y aplica las formas normales (1NF, 2NF, 3NF) para eliminar redundancias y mejorar la integridad.
-- Identifica y corrige cualquier violación de las formas normales en tu modelo.
+- Aplica las formas normales al modelo de datos creado en la fase anterior.
+- Identifica y elimina la redundancia en el modelo de datos.
 
-**Entregable:** Modelo de datos normalizado con formas normales aplicadas.
+**Entregable:** Modelo de datos normalizado con las formas normales aplicadas.
 
 <details>
 <summary>Pistas de conocimiento</summary>
 
-- Recuerda que la primera forma normal elimina columnas repetidas, la segunda forma normal elimina dependencias parciales y la tercera forma normal elimina dependencias transitivas.
-- Piensa en cómo las formas normales impactan la estructura y eficiencia del modelo de datos.
+- Revisa las definiciones de las formas normales y cómo se aplican a tu modelo de datos.
+- Considera cómo la normalización puede mejorar la eficiencia y reducir la redundancia.
 
 </details>
 
@@ -89,32 +88,34 @@ Una empresa de fintech necesita un modelo de datos eficiente y normalizado para 
 
 **Instrucciones:**
 
-- Crea las tablas necesarias en la base de datos para representar tu modelo de datos normalizado.
-- Define las claves primarias y extranjeras para establecer las relaciones entre las tablas.
-- Inserta datos de prueba en las tablas para verificar la integridad y funcionalidad del modelo.
+- Crea las tablas necesarias en la base de datos para implementar el modelo de datos normalizado.
+- Define las relaciones entre las tablas según el diagrama Entidad-Relación.
 
-**Entregable:** Base de datos con el modelo de datos normalizado implementado y datos de prueba insertados.
+**Entregable:** Base de datos implementada con el modelo de datos normalizado.
 
 <details>
 <summary>Pistas de conocimiento</summary>
 
-- Recuerda que las claves primarias y extranjeras son esenciales para mantener la integridad referencial en el modelo de datos.
-- Piensa en cómo los datos de prueba pueden ayudarte a verificar la funcionalidad y eficiencia del modelo de datos.
+- Utiliza las definiciones de las entidades y relaciones para crear las tablas en la base de datos.
+- Asegúrate de que las relaciones entre las tablas reflejen el diagrama Entidad-Relación.
 
 </details>
 
 ## Dimensiones Evaluadas
 
-- **queEs**: ¿Qué son las formas normales y por qué son importantes en el diseño de un modelo de datos?
-- **paraQueSirve**: ¿Para qué sirve un modelo Entidad-Relación en el diseño de un sistema de información?
-- **comoSeUsa**: ¿Cómo aplicas las formas normales a un modelo de datos para mejorar su integridad y eficiencia?
-- **erroresComunes**: ¿Cuáles son los errores comunes al aplicar las formas normales a un modelo de datos?
+- **queEs**: ¿Qué es un modelo de datos normalizado y por qué es importante?
+- **paraQueSirve**: ¿Para qué sirve la normalización en un modelo de datos?
+- **comoSeUsa**: ¿Cómo se aplican las formas normales a un modelo de datos?
+- **erroresComunes**: ¿Cuáles son los errores comunes al normalizar un modelo de datos?
+- **queDecisionesImplica**: ¿Qué decisiones implica la implementación de un modelo de datos normalizado?
 
 ## Criterios de Evaluacion
 
-- Diseño de un modelo de datos que representa las entidades y relaciones necesarias para el sistema.
-- Aplicación de las formas normales al modelo de datos para eliminar redundancias y mejorar la integridad.
-- Implementación del modelo de datos normalizado en una base de datos con datos de prueba insertados.
+- Identificar entidades y relaciones necesarias para el modelo de datos.
+- Aplicar las formas normales al modelo de datos.
+- Eliminar la redundancia en el modelo de datos.
+- Implementar el modelo de datos normalizado en una base de datos.
+- Definir las relaciones entre las tablas según el diagrama Entidad-Relación.
 
 ## Como trabajar con un asistente de IA
 
