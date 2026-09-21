@@ -1,0 +1,7 @@
+package com.fintech.repository;
+
+import com.fintech.model.Cuenta;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CuentaRepository extends JpaRepository<Cuenta, Long> {
+}
