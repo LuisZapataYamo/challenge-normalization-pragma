@@ -1,6 +1,6 @@
 package com.pragma.domain.service;
 
-import com.pragma.data.model.Entity;
+import com.pragma.data.model.DataEntity;
 import com.pragma.infrastructure.repository.DataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,15 +17,15 @@ public class DataService {
         this.dataRepository = dataRepository;
     }
 
-    public List<Entity> getAllEntities() {
+    public List<DataEntity> getAllEntities() {
         return dataRepository.findAll();
     }
 
-    public Entity getEntityById(Long id) {
+    public DataEntity getEntityById(Long id) {
         return dataRepository.findById(id).orElse(null);
     }
 
-    public Entity saveEntity(Entity entity) {
+    public DataEntity saveEntity(DataEntity entity) {
         return dataRepository.save(entity);
     }
 
