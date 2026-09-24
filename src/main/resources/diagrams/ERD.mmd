@@ -1,0 +1,29 @@
+erDiagram
+    CLIENTE {
+        BIGINT id PK
+        VARCHAR nombre
+        VARCHAR email
+    }
+
+    CUENTA {
+        BIGINT id PK
+        VARCHAR numeroCuenta
+        DOUBLE saldo
+        BIGINT cliente_id FK
+    }
+
+    TRANSACCION {
+        BIGINT id PK
+        DOUBLE monto
+        VARCHAR descripcion
+        BIGINT cuenta_id FK
+    }
+
+    PRODUCTO_FINANCIERO {
+        BIGINT id PK
+        VARCHAR nombre
+        DOUBLE tasaInteres
+    }
+
+    CLIENTE ||--o{ CUENTA : "tiene"
+    CUENTA ||--o{ TRANSACCION : "genera"
